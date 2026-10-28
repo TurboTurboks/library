@@ -69,6 +69,8 @@ function createBookTab(book) {
 
     document.querySelector("main").appendChild(newBook);
 
+    newBook.dataset.id = book.ID;
+
     newBookReadSwitchInput.addEventListener('click', () => {
         for (let x of myLibrary) {
             if (x.ID == book.ID) {
@@ -78,12 +80,21 @@ function createBookTab(book) {
     });
 
     removeBook.addEventListener("click", (event) => {
-        for (let x of myLibrary) {
+        const card = event.target.closest(".book_tab");
+        const id = card.dataset.id;
+
+        const index = myLibrary.findIndex(b => b.ID === id);
+        if (index !== -1) myLibrary.splice(index, 1);
+
+        card.remove();
+
+
+        /*for (let x of myLibrary) {
             if (x.ID == book.ID) {
                 newBook.remove(x);
                 myLibrary.splice(myLibrary.findIndex(b => b.ID === book.ID), 1);
             }
-        }
+        }*/
     });
 
 }
@@ -118,5 +129,6 @@ bookForm.addEventListener("submit", (event) => {
     bookForm.reset();
     bookDialog.close();
 });
+
 
 
