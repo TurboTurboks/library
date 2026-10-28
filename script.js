@@ -71,13 +71,14 @@ function createBookTab(book) {
 
     newBook.dataset.id = book.ID;
 
-    newBookReadSwitchInput.addEventListener('click', () => {
-        for (let x of myLibrary) {
-            if (x.ID == book.ID) {
-                x.read = !x.read;
-            }
-        }
+
+
+    newBookReadSwitchInput.addEventListener('change', () => {
+        book.toggleRead();
     });
+
+
+
 
     removeBook.addEventListener("click", (event) => {
         const card = event.target.closest(".book_tab");
@@ -88,17 +89,12 @@ function createBookTab(book) {
 
         card.remove();
 
-
-        /*for (let x of myLibrary) {
-            if (x.ID == book.ID) {
-                newBook.remove(x);
-                myLibrary.splice(myLibrary.findIndex(b => b.ID === book.ID), 1);
-            }
-        }*/
     });
 
 }
-
+Book.prototype.toggleRead = function () {
+    this.read = !this.read;
+};
 myLibrary.forEach(createBookTab);
 
 const addBookBtn = document.querySelector("#add-book-btn");
